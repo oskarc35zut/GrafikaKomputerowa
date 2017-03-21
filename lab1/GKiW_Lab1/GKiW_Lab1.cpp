@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include <math.h>
 
 // Deklaracje funkcji, ktore beda uzyte do obslugi roznych zdarzen.
 void OnRender();
@@ -52,37 +53,133 @@ void OnRender() {
 	glLoadIdentity();
 
 	// Przesuniecie swiata (przeciwienstwo przesuniecia kamery).
-	glTranslatef(0.0f, 0.0f, -6.0f);
+	glTranslatef(0.0f, -1.0f, -10.0f);
 
 	// Obrot kamery - aby zatrzymac ja w miejscu, nalezy zakomentowac.
-	glRotatef(frame, 0.0f, 1.0f, 0.0f);
+	glRotatef((float)(frame/16), 0.0f, 1.0f, 0.0f);
 
 
 	// Rysowanie obiektow na scenie.
 
 	// Prostopadloscian
-	glColor3f(1.0f, 0.0f, 0.0f);
+	//glColor3f(1.0f, 0.0f, 0.0f);
+	//glPushMatrix();
+	//	glTranslatef(0.0f, 0.5f, 0.0f);
+	//	glScalef(4.0f, 0.5f, 0.5f);
+	//	glutSolidCube(1.0f);
+	//glPopMatrix();
+
+	// main
+	glColor3f(0.0f, 0.0f, 1.0f);
 	glPushMatrix();
-		glTranslatef(0.0f, 0.5f, 0.0f);
-		glScalef(4.0f, 0.5f, 0.5f);
-		glutSolidCube(1.0f);
+		glTranslatef(0.0f, 0.0f, 0.0f);
+		glScalef(2.0f, 3.5f, 2.0f);
+		glutWireSphere(.5f, 24, 24);
 	glPopMatrix();
 
-	// Kula
-	glColor3f(0.0f, 1.0f, 0.0f);
+	
+	// head
+	glColor3f(255.0f, 215.0f, 0.0f);
 	glPushMatrix();
-		glTranslatef(-3.0f, -0.5f, 0.0f);
+		glTranslatef(0.0f, 2.2f, 0.0f);
+		glScalef(1.5f, 1.5f, 1.5f);
 		glutSolidSphere(.5f, 24, 24);
+	glPopMatrix();
+
+	// Ucho L
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glPushMatrix();
+	glTranslatef(0.7f, 2.5f, 0.0f);
+	glScalef(0.5f, 0.5f, 0.5f);
+	glutWireSphere(.5f, 10, 10);
+	glPopMatrix();
+
+	// Ucho R
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glPushMatrix();
+	glTranslatef(-0.7f, 2.5f, 0.0f);
+	glScalef(0.5f, 0.5f, 0.5f);
+	glutWireSphere(.5f, 10, 10);
 	glPopMatrix();
 
 	// Stozek
 	glColor3f(0.0f, 0.0f, 1.0f);
 	glPushMatrix();
-		glTranslatef(3.0f, -1.0f, 0.0f);
+		glTranslatef(0.0f, 2.8f, 0.0f);
 		glRotatef(-90.0f, 1.0f, 0.0f, 0.0f);
+		glScalef(2.0f, 2.0f, 1.0f);
 		glutSolidCone(.5f, 1.0f, 14, 14);
 	glPopMatrix();
+
+	 // Noga L
+	glColor3f(0.5f, 0.0f, 0.0f);
+	glPushMatrix();
+		glTranslatef(-1.0f, -3.0f, 0.0f);
+		glRotatef(-30.0f, 0.0f, 0.0f, 1.0f);
+		glScalef(0.2f, 2.7f, 0.2f);
+		glutSolidCube(1.0f);
+	glPopMatrix();
+
+	// Stopa L
+	glColor3f(0.1f, 0.2f, 0.6f);
+	glPushMatrix();
+	glTranslatef(-1.9f, -4.5f, 0.0f);
+	glScalef(0.5f, 0.5f, 0.5f);
+	glutWireSphere(.5f, 10, 10);
+	glPopMatrix();
+
+	// Noga R
+	glColor3f(0.5f, 0.0f, 0.0f);
+	glPushMatrix();
+	glTranslatef(1.0f, -3.0f, 0.0f);
+	glRotatef(30.0f, 0.0f, 0.0f, 1.0f);
+	glScalef(0.2f, 2.7f, 0.2f);
+	glutSolidCube(1.0f);
+	glPopMatrix();
 	
+	// Stopa R
+	glColor3f(0.1f, 0.2f, 0.6f);
+	glPushMatrix();
+	glTranslatef(1.9f, -4.5f, 0.0f);
+	glScalef(0.5f, 0.5f, 0.5f);
+	glutWireSphere(.5f, 10, 10);
+	glPopMatrix();
+
+
+
+	// Reka L
+	glColor3f(0.5f, 0.0f, 0.0f);
+	glPushMatrix();
+	glTranslatef(-1.7f, 1.7f, 0.0f);
+	glRotatef(-120.0f, 0.0f, 0.0f, (float)(sinus(frame)));
+	glScalef(0.2f, 1.8f, 0.2f);
+	glutSolidCube(1.0f);
+	glPopMatrix();
+
+	// Dlon L
+	glColor3f(0.1f, 0.2f, 0.6f);
+	glPushMatrix();
+	glTranslatef(-2.7f, 2.3f, 0.0f);
+	glScalef(0.5f, 0.5f, 0.5f);
+	glutWireSphere(.5f, 10, 10);
+	glPopMatrix();
+
+	// Reka R
+	glColor3f(0.5f, 0.0f, 0.0f);
+	glPushMatrix();
+	glTranslatef(1.7f, 1.7f, 0.0f);
+	glRotatef(120.0f, 0.0f, 0.0f, 1.0f);
+	glScalef(0.2f, 1.8f, 0.2f);
+	glutSolidCube(1.0f);
+	glPopMatrix();
+
+	// Dlon R
+	glColor3f(0.1f, 0.2f, 0.6f);
+	glPushMatrix();
+	glTranslatef(2.7f, 2.3f, 0.0f);
+	glScalef(0.5f, 0.5f, 0.5f);
+	glutWireSphere(.5f, 10, 10);
+	glPopMatrix();
 
 	// Jesli instrukcje w danej implementacji OpenGL byly buforowane,
 	// w tym momencie bufor zostanie oprozniony a instrukcje wykonane.
