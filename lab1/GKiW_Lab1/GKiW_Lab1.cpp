@@ -6,8 +6,15 @@ void OnRender();
 void OnReshape(int, int);
 
 // Punkt wejscia do programu.
+
+float delta;
+
 int main(int argc, char * argv[])
 {
+	//printf("Ustal predkosc animacji\n");
+	//scanf("%f", &delta);
+
+
 	// Inicjalizacja biblioteki GLUT. Nalezy przekazac parametry
 	// wywolania programu.
 	glutInit(&argc, argv);
@@ -56,7 +63,7 @@ void OnRender() {
 	glTranslatef(0.0f, -1.0f, -10.0f);
 
 	// Obrot kamery - aby zatrzymac ja w miejscu, nalezy zakomentowac.
-	glRotatef((float)(frame/16), 0.0f, 1.0f, 0.0f);
+	glRotatef((float)(frame*5), 0.0f, 1.0f, 0.0f);
 
 
 	// Rysowanie obiektow na scenie.
@@ -89,24 +96,24 @@ void OnRender() {
 	// Ucho L
 	glColor3f(1.0f, 0.0f, 0.0f);
 	glPushMatrix();
-	glTranslatef(0.7f, 2.5f, 0.0f);
-	glScalef(0.5f, 0.5f, 0.5f);
-	glutWireSphere(.5f, 10, 10);
+		glTranslatef(0.7f, 2.5f, 0.0f);
+		glScalef(0.5f, 0.5f, 0.5f);
+		glutWireSphere(.5f, 10, 10);
 	glPopMatrix();
 
 	// Ucho R
 	glColor3f(1.0f, 0.0f, 0.0f);
 	glPushMatrix();
-	glTranslatef(-0.7f, 2.5f, 0.0f);
-	glScalef(0.5f, 0.5f, 0.5f);
-	glutWireSphere(.5f, 10, 10);
+		glTranslatef(-0.7f, 2.5f, 0.0f);
+		glScalef(0.5f, 0.5f, 0.5f);
+		glutWireSphere(.5f, 10, 10);
 	glPopMatrix();
 
 	// Stozek
 	glColor3f(0.0f, 0.0f, 1.0f);
 	glPushMatrix();
 		glTranslatef(0.0f, 2.8f, 0.0f);
-		glRotatef(-90.0f, 1.0f, 0.0f, 0.0f);
+			glRotatef(-90.0f, 1.0f, 0.0f, 0.0f);
 		glScalef(2.0f, 2.0f, 1.0f);
 		glutSolidCone(.5f, 1.0f, 14, 14);
 	glPopMatrix();
@@ -115,7 +122,7 @@ void OnRender() {
 	glColor3f(0.5f, 0.0f, 0.0f);
 	glPushMatrix();
 		glTranslatef(-1.0f, -3.0f, 0.0f);
-		glRotatef(-30.0f, 0.0f, 0.0f, 1.0f);
+			glRotatef(-30.0f, 0.0f, 0.0f, 1.0f);
 		glScalef(0.2f, 2.7f, 0.2f);
 		glutSolidCube(1.0f);
 	glPopMatrix();
@@ -123,62 +130,63 @@ void OnRender() {
 	// Stopa L
 	glColor3f(0.1f, 0.2f, 0.6f);
 	glPushMatrix();
-	glTranslatef(-1.9f, -4.5f, 0.0f);
-	glScalef(0.5f, 0.5f, 0.5f);
-	glutWireSphere(.5f, 10, 10);
+		glTranslatef(-1.9f, -4.5f, 0.0f);
+		glScalef(0.5f, 0.5f, 0.5f);
+		glutWireSphere(.5f, 10, 10);
 	glPopMatrix();
 
 	// Noga R
 	glColor3f(0.5f, 0.0f, 0.0f);
 	glPushMatrix();
-	glTranslatef(1.0f, -3.0f, 0.0f);
-	glRotatef(30.0f, 0.0f, 0.0f, 1.0f);
-	glScalef(0.2f, 2.7f, 0.2f);
-	glutSolidCube(1.0f);
+		glTranslatef(1.0f, -3.0f, 0.0f);
+			glRotatef(30.0f, 0.0f, 0.0f, 1.0f);
+		glScalef(0.2f, 2.7f, 0.2f);
+		glutSolidCube(1.0f);
 	glPopMatrix();
 	
 	// Stopa R
 	glColor3f(0.1f, 0.2f, 0.6f);
-	glPushMatrix();
-	glTranslatef(1.9f, -4.5f, 0.0f);
-	glScalef(0.5f, 0.5f, 0.5f);
-	glutWireSphere(.5f, 10, 10);
+		glPushMatrix();
+		glTranslatef(1.9f, -4.5f, 0.0f);
+		glScalef(0.5f, 0.5f, 0.5f);
+		glutWireSphere(.5f, 10, 10);
 	glPopMatrix();
 
 	// Reka L
 	glColor3f(0.5f, 0.0f, 0.0f);
 	glPushMatrix();
-	//glTranslatef(-1.7f, 1.7f, 0.0f);
-	glRotatef( (120.0f + 60*(float)(sin((frame)))), 0.0f, 0.0f, 1.0f);
-	glTranslatef(-1.7f, 1.7f, 0.0f);
-	printf("%f ||| %d\n", (sin((frame))), frame);
-	glScalef(0.2f, 1.8f, 0.2f);
-	glutSolidCube(1.0f);
+			glTranslatef(-0.9f, 1.2f, 0.0f); // ustawienie osi obrotu
+			glRotatef( (60.0f + 60*(float)(sin((frame)))), 0.0f, 0.0f, 1.0f);
+			glTranslatef(0.0f, 0.8f, 0.0f); // zmiana pozycji wzgledem osi obrotu
+		glScalef(0.2f, 1.8f, 0.2f);
+		glutSolidCube(1.0f);
 	glPopMatrix();
 
 	// Dlon L
 	glColor3f(0.1f, 0.2f, 0.6f);
 	glPushMatrix();
-	glTranslatef(-2.7f, 2.3f, 0.0f);
-	glScalef(0.5f, 0.5f, 0.5f);
-	glutWireSphere(.5f, 10, 10);
+			glTranslatef(-0.9f, 1.2f, 0.0f); // ustawienie osi obrotu
+			glRotatef((60.0f + 60*(float)(sin(frame))), 0.0f, 0.0f, 1.0f);
+			glTranslatef(0.0f, 2.0f, 0.0f);// zmiana pozycji wzgledem osi obrotu
+		glScalef(0.5f, 0.5f, 0.5f);
+		glutWireSphere(.5f, 10, 10);
 	glPopMatrix();
 
 	// Reka R
 	glColor3f(0.5f, 0.0f, 0.0f);
 	glPushMatrix();
-	glTranslatef(1.7f, 1.7f, 0.0f);
-	glRotatef(120.0f, 0.0f, 0.0f, 1.0f);
-	glScalef(0.2f, 1.8f, 0.2f);
-	glutSolidCube(1.0f);
+		glTranslatef(1.7f, 1.7f, 0.0f);
+			glRotatef(120.0f, 0.0f, 0.0f, 1.0f);
+		glScalef(0.2f, 1.8f, 0.2f);
+		glutSolidCube(1.0f);
 	glPopMatrix();
 
 	// Dlon R
 	glColor3f(0.1f, 0.2f, 0.6f);
 	glPushMatrix();
-	glTranslatef(2.7f, 2.3f, 0.0f);
-	glScalef(0.5f, 0.5f, 0.5f);
-	glutWireSphere(.5f, 10, 10);
+		glTranslatef(2.7f, 2.3f, 0.0f);
+		glScalef(0.5f, 0.5f, 0.5f);
+		glutWireSphere(.5f, 10, 10);
 	glPopMatrix();
 
 	// Jesli instrukcje w danej implementacji OpenGL byly buforowane,
@@ -192,7 +200,8 @@ void OnRender() {
 	glutPostRedisplay();
 
 	// Inkrementacja licznika klatek.
-	frame += 0.002;
+	frame += delta;
+	printf("%f ||| %f\n", (sin((frame))), frame);
 
 }
 
