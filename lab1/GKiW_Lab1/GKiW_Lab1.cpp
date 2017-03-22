@@ -37,7 +37,7 @@ int main(int argc, char * argv[])
 }
 
 // Licznik klatek - uzyteczny przy prostym ruchu kamery.
-int frame = 0;
+float frame = 0;
 
 // Callback przerysowujacy klatke.
 void OnRender() {
@@ -145,13 +145,13 @@ void OnRender() {
 	glutWireSphere(.5f, 10, 10);
 	glPopMatrix();
 
-
-
 	// Reka L
 	glColor3f(0.5f, 0.0f, 0.0f);
 	glPushMatrix();
+	//glTranslatef(-1.7f, 1.7f, 0.0f);
+	glRotatef( (120.0f + 60*(float)(sin((frame)))), 0.0f, 0.0f, 1.0f);
 	glTranslatef(-1.7f, 1.7f, 0.0f);
-	glRotatef(-120.0f, 0.0f, 0.0f, (float)(sinus(frame)));
+	printf("%f ||| %d\n", (sin((frame))), frame);
 	glScalef(0.2f, 1.8f, 0.2f);
 	glutSolidCube(1.0f);
 	glPopMatrix();
@@ -192,7 +192,7 @@ void OnRender() {
 	glutPostRedisplay();
 
 	// Inkrementacja licznika klatek.
-	frame++;
+	frame += 0.002;
 
 }
 
