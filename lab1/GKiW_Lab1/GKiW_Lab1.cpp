@@ -7,7 +7,7 @@ void OnReshape(int, int);
 
 // Punkt wejscia do programu.
 
-float delta = 0.0035f;
+float delta = 0.0065f;
 
 int main(int argc, char * argv[])
 {
