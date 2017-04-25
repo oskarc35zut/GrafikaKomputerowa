@@ -1,6 +1,6 @@
 ﻿#include "stdafx.h"
 #include "GKiW_Lab2.h"
-
+float tmp = 0;
 int main(int argc, char* argv[])
 {
 	glutInit(&argc, argv);
@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
 
 	glutCreateWindow("GKiW: Lab 2");
 
-	
+	glutSetCursor(GLUT_CURSOR_NONE);
 
 	glutDisplayFunc(OnRender);
 	glutReshapeFunc(OnReshape);
@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
 	player.dir.x = 0.0f;
 	player.dir.y = 0.0f;
 	player.dir.z = -1.0f;
-	player.speed = .1f;
+	player.speed = 0.1f;
 
 	
 
@@ -97,25 +97,60 @@ void OnTimer(int id) {
 	}
 
 	if (keystate['j']) {
-		printf("J rotate: %f\n", cos(5 + atan2f(player.dir.z, player.dir.x)));
-		player.dir.x += cos(5.0f + atan2f(player.dir.z, player.dir.x));
-		player.dir.z += sin(5.0f + atan2f(player.dir.z, player.dir.x));
+		printf("J rotate: X=%f Z=%f z=5f x=%f delta=%f\n ", cos(5.0f + atan2f(player.dir.z, player.dir.x)), sin(5.0f + atan2f(player.dir.z, player.dir.x)), player.dir.z, player.dir.x, player.dir.x - tmp);
+		tmp = player.dir.x;
+
+		player.dir.x = cos(atan2f(player.dir.z, player.dir.x) - 0.03f);
+		player.dir.z = sin(atan2f(player.dir.z, player.dir.x) - 0.03f);
+
 	}
 
 	if (keystate['l']) {
 		printf("L rotate: %f\n", cos(5 + atan2f(player.dir.z, player.dir.x)));
-		player.dir.x -= cos(5 + atan2f(player.dir.z, player.dir.x));
-		player.dir.z -= sin(5 + atan2f(player.dir.z, player.dir.x));
+		player.dir.x = cos(atan2f(player.dir.z, player.dir.x) + 0.03f);
+		player.dir.z = sin(atan2f(player.dir.z, player.dir.x) + 0.03f);
 	}
 
 	if (keystate['i']) {
-		player.dir.y -= sin(10 + atan2f(player.dir.z, player.dir.x));
+		printf("Up Xd= %f  Zd= %f  Yd= %f\n", player.dir.x, player.dir.z, player.dir.y);
+		player.dir.x = cos(atan2f(player.dir.y, player.dir.x) + 0.03f);
+		player.dir.y = sin(atan2f(player.dir.y, player.dir.x) + 0.03f);
 	}
 
 	if (keystate['k']) {
-		player.dir.y += sin(10 + atan2f(player.dir.z, player.dir.x));
+		printf("do Xd= %f  Zd= %f  Yd= %f\n", player.dir.x, player.dir.z, player.dir.y);
+		player.dir.x = cos(atan2f(player.dir.y, player.dir.x) - 0.03f);
+		player.dir.y = sin(atan2f(player.dir.y, player.dir.x) - 0.03f);
 	}
 
+}
+
+int tmpX;
+int tmpY;
+
+void Mysz(int x, int y)
+{
+	if (x>tmpX)
+	{
+		player.dir.x = cos(atan2f(player.dir.z, player.dir.x) - 0.01f);
+		player.dir.z = sin(atan2f(player.dir.z, player.dir.x) - 0.01f);
+	}
+	if (x<tmpX)
+	{
+		player.dir.x = cos(atan2f(player.dir.z, player.dir.x) + 0.01f);
+		player.dir.z = sin(atan2f(player.dir.z, player.dir.x) + 0.01f);
+	}
+	tmpX = x;
+
+	if (y>tmpY)
+	{
+
+	}
+	if (y<tmpY)
+	{
+
+	}
+	tmpY = y;
 }
 
 void OnRender() {
@@ -142,8 +177,13 @@ void OnRender() {
 		}
 	}
 
-	
+	glutPassiveMotionFunc(&Mysz);
 
+	if (tmpY > 250 || tmpY < 150 || tmpX > 250 || tmpX < 150)
+	{
+		glutWarpPointer(200, 200);
+	}
+	
 	glFlush();
 	glutSwapBuffers();
 	glutPostRedisplay();
