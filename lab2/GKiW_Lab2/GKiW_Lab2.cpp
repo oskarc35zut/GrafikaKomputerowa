@@ -12,6 +12,7 @@ int main(int argc, char* argv[])
 	glutCreateWindow("GKiW: Lab 2");
 
 	glutSetCursor(GLUT_CURSOR_NONE);
+	glutFullScreen();
 
 	glutDisplayFunc(OnRender);
 	glutReshapeFunc(OnReshape);
@@ -100,27 +101,25 @@ void OnTimer(int id) {
 		printf("J rotate: X=%f Z=%f z=5f x=%f delta=%f\n ", cos(5.0f + atan2f(player.dir.z, player.dir.x)), sin(5.0f + atan2f(player.dir.z, player.dir.x)), player.dir.z, player.dir.x, player.dir.x - tmp);
 		tmp = player.dir.x;
 
-		player.dir.x = cos(atan2f(player.dir.z, player.dir.x) - 0.03f);
-		player.dir.z = sin(atan2f(player.dir.z, player.dir.x) - 0.03f);
+		player.dir.x = cos(atan2f(player.dir.z, player.dir.x) - 0.06f);
+		player.dir.z = sin(atan2f(player.dir.z, player.dir.x) - 0.06f);
 
 	}
 
 	if (keystate['l']) {
 		printf("L rotate: %f\n", cos(5 + atan2f(player.dir.z, player.dir.x)));
-		player.dir.x = cos(atan2f(player.dir.z, player.dir.x) + 0.03f);
-		player.dir.z = sin(atan2f(player.dir.z, player.dir.x) + 0.03f);
+		player.dir.x = cos(atan2f(player.dir.z, player.dir.x) + 0.06f);
+		player.dir.z = sin(atan2f(player.dir.z, player.dir.x) + 0.06f);
 	}
 
 	if (keystate['i']) {
 		printf("Up Xd= %f  Zd= %f  Yd= %f\n", player.dir.x, player.dir.z, player.dir.y);
-		player.dir.x = cos(atan2f(player.dir.y, player.dir.x) + 0.03f);
-		player.dir.y = sin(atan2f(player.dir.y, player.dir.x) + 0.03f);
+		player.dir.y += 0.04f;
 	}
 
 	if (keystate['k']) {
 		printf("do Xd= %f  Zd= %f  Yd= %f\n", player.dir.x, player.dir.z, player.dir.y);
-		player.dir.x = cos(atan2f(player.dir.y, player.dir.x) - 0.03f);
-		player.dir.y = sin(atan2f(player.dir.y, player.dir.x) - 0.03f);
+		player.dir.y -= 0.04f;
 	}
 
 }
@@ -132,23 +131,23 @@ void Mysz(int x, int y)
 {
 	if (x>tmpX)
 	{
-		player.dir.x = cos(atan2f(player.dir.z, player.dir.x) - 0.01f);
-		player.dir.z = sin(atan2f(player.dir.z, player.dir.x) - 0.01f);
+		player.dir.x = cos(atan2f(player.dir.z, player.dir.x) - 0.03f);
+		player.dir.z = sin(atan2f(player.dir.z, player.dir.x) - 0.03f);
 	}
 	if (x<tmpX)
 	{
-		player.dir.x = cos(atan2f(player.dir.z, player.dir.x) + 0.01f);
-		player.dir.z = sin(atan2f(player.dir.z, player.dir.x) + 0.01f);
+		player.dir.x = cos(atan2f(player.dir.z, player.dir.x) + 0.03f);
+		player.dir.z = sin(atan2f(player.dir.z, player.dir.x) + 0.03f);
 	}
 	tmpX = x;
 
 	if (y>tmpY)
 	{
-
+		player.dir.y -= 0.03f;
 	}
 	if (y<tmpY)
 	{
-
+		player.dir.y += 0.03f;
 	}
 	tmpY = y;
 }
