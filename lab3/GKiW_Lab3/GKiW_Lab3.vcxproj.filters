@@ -24,12 +24,18 @@
     <ClInclude Include="GKiW_Lab3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Fizyka.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GKiW_Lab3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Fizyka.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

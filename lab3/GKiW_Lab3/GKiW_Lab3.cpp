@@ -1,6 +1,14 @@
 #include "stdafx.h"
 #include "GKiW_Lab3.h"
 
+//bullet
+#include "bullet/btBulletDynamicsCommon.h"
+#include "bullet/LinearMath/btVector3.h"
+#include "bullet/LinearMath/btAlignedObjectArray.h" 
+#include "examples/CommonInterfaces/CommonRigidBodyBase.h"
+
+#include "examples/ExtendedTutorials/SimpleBox.h"
+
 int main(int argc, char* argv[])
 {
 	glutInit(&argc, argv);
@@ -28,6 +36,8 @@ int main(int argc, char* argv[])
 	glEnable(GL_LIGHTING); // Wlaczenie oswietlenia
 	glShadeModel(GL_SMOOTH); // Wybor techniki cieniowania
 	glEnable(GL_LIGHT0); // Wlaczenie 0-go zrodla swiatla
+
+	
 
 	player.pos.x = 0.0f;
 	player.pos.y = 0.0f;
@@ -105,7 +115,7 @@ void OnTimer(int id) {
 		}
 
 		// Obrot kamery
-		float phi = atan2(player.dir.z, player.dir.x);
+		float phi = (float)atan2(player.dir.z, player.dir.x);
 		if (keystate['q']) {
 			phi -= .03f;
 		}
@@ -113,8 +123,8 @@ void OnTimer(int id) {
 			phi += .03f;
 		}
 
-		player.dir.x = cos(phi);
-		player.dir.z = sin(phi);
+		player.dir.x = (float)cos(phi);
+		player.dir.z = (float)sin(phi);
 
 		// Znalezienie kierunku prostopadlego
 		vec3 per;
@@ -131,8 +141,8 @@ void OnTimer(int id) {
 		player.pos.z += per.z * player.velS * .1f;
 		
 		// Bezwladnosc - w kazdym cyklu maleje predkosc gracza
-		player.velM /= 1.2;
-		player.velS /= 1.2;
+		player.velM /= 1.2f;
+		player.velS /= 1.2f;
 
 	#pragma endregion
 
@@ -224,7 +234,7 @@ void OnRender() {
 				glMaterialf(GL_FRONT, GL_SHININESS, 20.0f);
 
 				glPushMatrix();
-				glTranslatef(ix, 5.0f, iz);
+				glTranslatef((GLfloat)ix, 5.0f, (GLfloat)iz);
 				glutSolidSphere(1.0f, 16, 16);
 				glPopMatrix();
 
@@ -246,7 +256,7 @@ void OnRender() {
 				glMaterialf(GL_FRONT, GL_SHININESS, 20.0f);
 
 				glPushMatrix();
-				glTranslatef(ix, -0.2f, iz);
+				glTranslatef((GLfloat)ix, -0.2f, (GLfloat)iz);
 				glutSolidCube(1.4);
 				glPopMatrix();
 
