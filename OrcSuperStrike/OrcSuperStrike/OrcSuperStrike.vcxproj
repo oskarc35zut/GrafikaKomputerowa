@@ -144,12 +144,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bullet.h" />
+    <ClInclude Include="FreeGlutCallsBack.h" />
+    <ClInclude Include="GameDisplay.h" />
     <ClInclude Include="OpenGL.h" />
     <ClInclude Include="OrcSuperStrike.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameDisplay.cpp" />
     <ClCompile Include="OrcSuperStrike.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
