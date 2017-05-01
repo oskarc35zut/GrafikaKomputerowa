@@ -1,10 +1,13 @@
 #include "stdafx.h"
 #include "GameDisplay.h"
-#include "FreeGlutCallsBack.h"
 
 
 GameDisplay::GameDisplay()
 {
+	LightPos.x = 0.0f;
+	LightPos.y = 0.0f;
+	LightPos.z = 0.0f;
+
 	player.pos.x = 0.0f;
 	player.pos.y = 0.0f;
 	player.pos.z = 8.0f;
@@ -14,10 +17,16 @@ GameDisplay::GameDisplay()
 	player.dir.z = -1.0f;
 
 	player.speed = 1.50f;
+
+
+	for (int i = 0; i < 256; i++)
+	{
+		keystate[i] = false;
+		keystate_special[i] = false;
+	}
 }
 
-
-
+ 
 
 GameDisplay::~GameDisplay()
 {
@@ -66,8 +75,6 @@ void GameDisplay::OnSpecialKeyUp(int key, int x, int y)
 
 void GameDisplay::OnTimer(int id)
 {
-	glutTimerFunc(17, OnTimerCallBack, 0);
-
 	T = glutGet(GLUT_ELAPSED_TIME); // Ile milisekund uplynelo od momentu uruchomienia programu?
 
 #pragma region Ruch kamery

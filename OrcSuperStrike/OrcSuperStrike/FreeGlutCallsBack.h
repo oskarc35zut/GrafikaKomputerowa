@@ -1,5 +1,4 @@
 #pragma once
-#include "stdafx.h"
 #include "GameDisplay.h"
 
 // global pointer to our application object
@@ -37,7 +36,9 @@ static GameDisplay* game;
 
 	static void OnTimerCallBack(int id)
 	{
+		glutTimerFunc(17, OnTimerCallBack, 0);
 		game->OnTimer(id);
+		
 	}
 
 
@@ -54,40 +55,40 @@ static GameDisplay* game;
 #pragma endregion //Callbaki
 
 
-int glutmain(int argc, char **argv, int width, int height, const char* title, GameDisplay* gameOn) {
-	// store the application object so we can
-	// access it globally
-	game = gameOn;
+	int glutmain(int argc, char **argv, int width, int height, const char* title, GameDisplay* gameOn) {
+		// store the application object so we can
+		// access it globally
+		game = gameOn;
 
-	glutInit(&argc, argv);
+		glutInit(&argc, argv);
 
-	glutInitWindowPosition(100, 100);
-	glutInitWindowSize(640, 360);
-	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
+		glutInitWindowPosition(100, 100);
+		glutInitWindowSize(640, 360);
+		glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 
-	glutCreateWindow("Orc SuperStrike");
-
-
-
-	glutDisplayFunc(OnRenderCallBack);
-	glutReshapeFunc(OnReshapeCallBack);
-	glutKeyboardFunc(OnKeyPressCallBack);
-	glutKeyboardUpFunc(OnKeyUpCallBack);
-	glutSpecialFunc(OnSpecialKeyPressCallBack); // klawisze specjalne (strzalki, F1-F12, PgUp/PgDn, Home, End, Delete, Insert)
-	glutSpecialUpFunc(OnSpecialKeyUpCallBack);
-	glutTimerFunc(17, OnTimerCallBack, 0);
-
-	glEnable(GL_DEPTH_TEST);
-
-	// Ustawiamy komponent ambient naszej sceny - wartosc niezalezna od swiatla (warto zresetowac)
-	float gl_amb[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, gl_amb);
-
-	glEnable(GL_LIGHTING); // Wlaczenie oswietlenia
-	glShadeModel(GL_SMOOTH); // Wybor techniki cieniowania
-	glEnable(GL_LIGHT0); // Wlaczenie 0-go zrodla swiatla
+		glutCreateWindow(title);
 
 
-	glutMainLoop();
-	return 0;
-}
+
+		glutDisplayFunc(OnRenderCallBack);
+		glutReshapeFunc(OnReshapeCallBack);
+		glutKeyboardFunc(OnKeyPressCallBack);
+		glutKeyboardUpFunc(OnKeyUpCallBack);
+		glutSpecialFunc(OnSpecialKeyPressCallBack); // klawisze specjalne (strzalki, F1-F12, PgUp/PgDn, Home, End, Delete, Insert)
+		glutSpecialUpFunc(OnSpecialKeyUpCallBack);
+		glutTimerFunc(17, OnTimerCallBack, 0);
+
+		glEnable(GL_DEPTH_TEST);
+
+		// Ustawiamy komponent ambient naszej sceny - wartosc niezalezna od swiatla (warto zresetowac)
+		float gl_amb[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, gl_amb);
+
+		glEnable(GL_LIGHTING); // Wlaczenie oswietlenia
+		glShadeModel(GL_SMOOTH); // Wybor techniki cieniowania
+		glEnable(GL_LIGHT0); // Wlaczenie 0-go zrodla swiatla
+
+
+		glutMainLoop();
+		return 0;
+	}

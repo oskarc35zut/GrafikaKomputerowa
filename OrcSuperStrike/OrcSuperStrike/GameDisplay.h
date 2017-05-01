@@ -1,4 +1,7 @@
 #pragma once
+#include "stdafx.h"
+
+
 class GameDisplay
 {
 public:
@@ -21,14 +24,14 @@ public:
 	void OnReshape(int, int);
 	
 	struct vec3 {
-		float x, y, z;
+		float x = 0.0f, y = 0.0f, z = 0.0f;
 	};
 
 	struct SCameraState {
 		vec3 pos;
 		vec3 dir;
-		float speed;
-		float velM, velS; // zmienne pomocnicze do efektu bezwladnosci kamery - aktualna predkosc
+		float speed = 0.0f;
+		float velM = 0.0f, velS = 0.0f; // zmienne pomocnicze do efektu bezwladnosci kamery - aktualna predkosc
 	};
 
 	SCameraState player;
@@ -36,7 +39,6 @@ public:
 	double T = 0.0; // aktualny czas (a dokladniej - czas z ostatniego wywolania OnTimer())
 
 	vec3 LightPos; // pozycja zrodla swiatla
-
 
 	///
 
