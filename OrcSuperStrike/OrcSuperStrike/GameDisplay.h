@@ -1,6 +1,6 @@
 #pragma once
 #include "stdafx.h"
-
+#include "BulletDynamics/Dynamics/btDynamicsWorld.h"
 
 class GameDisplay
 {
@@ -40,11 +40,25 @@ public:
 
 	vec3 LightPos; // pozycja zrodla swiatla
 
-	///
-
-
 	bool keystate[256];
 	bool keystate_special[256];
-//	void OnKeyPress2(unsigned char key, int x, int y);
+
+
+
+
+
+
+
+
+	// Funckje fizyczne.
+	virtual void InitializePhysics() {};
+	virtual void ShutdownPhysics() {};
+
+	// Bullet core
+	btBroadphaseInterface* m_pBroadphase;
+	btCollisionConfiguration* m_pCollisionConfiguration;
+	btCollisionDispatcher* m_pDispatcher;
+	btConstraintSolver* m_pSolver;
+	btDynamicsWorld* m_pWorld;
 };
 

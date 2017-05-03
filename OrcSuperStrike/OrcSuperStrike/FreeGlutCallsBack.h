@@ -56,8 +56,7 @@ static GameDisplay* game;
 
 
 	int glutmain(int argc, char **argv, int width, int height, const char* title, GameDisplay* gameOn) {
-		// store the application object so we can
-		// access it globally
+
 		game = gameOn;
 
 		glutInit(&argc, argv);
@@ -68,7 +67,7 @@ static GameDisplay* game;
 
 		glutCreateWindow(title);
 
-
+		//game->InitializePhysics();
 
 		glutDisplayFunc(OnRenderCallBack);
 		glutReshapeFunc(OnReshapeCallBack);

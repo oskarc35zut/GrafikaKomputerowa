@@ -3,7 +3,14 @@
 
 
 GameDisplay::GameDisplay()
+	:
+	m_pBroadphase(0),
+	m_pCollisionConfiguration(0),
+	m_pDispatcher(0),
+	m_pSolver(0),
+	m_pWorld(0)
 {
+
 	LightPos.x = 0.0f;
 	LightPos.y = 0.0f;
 	LightPos.z = 0.0f;
@@ -18,18 +25,20 @@ GameDisplay::GameDisplay()
 
 	player.speed = 1.50f;
 
-
 	for (int i = 0; i < 256; i++)
 	{
 		keystate[i] = false;
 		keystate_special[i] = false;
 	}
+
+	
 }
 
  
 
 GameDisplay::~GameDisplay()
 {
+	ShutdownPhysics();
 }
 
 #pragma region Obsluga wejscia
