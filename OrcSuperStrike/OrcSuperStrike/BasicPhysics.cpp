@@ -6,7 +6,6 @@
 
 BasicPhysics::BasicPhysics()
 {
-
 }
 
 BasicPhysics::~BasicPhysics()
@@ -19,7 +18,7 @@ BasicPhysics::~BasicPhysics()
 void BasicPhysics::InitializePhysics()
 {
 	//stworz konfiguracje kolizji
-	m_pCollisionConfiguration = new btDefaultCollisionConfiguration();
+	//m_pCollisionConfiguration = new btDefaultCollisionConfiguration();
 	//// stworz dispatcher
 	//m_pDispatcher = new btCollisionDispatcher(m_pCollisionConfiguration);
 	//// stworz broadphase

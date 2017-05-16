@@ -60,5 +60,6 @@ public:
 	btCollisionDispatcher* m_pDispatcher;
 	btConstraintSolver* m_pSolver;
 	btDynamicsWorld* m_pWorld;
+	void InfMap(int x1, int z1);
 };
 

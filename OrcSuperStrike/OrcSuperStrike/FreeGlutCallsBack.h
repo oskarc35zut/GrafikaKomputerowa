@@ -85,7 +85,9 @@ static GameDisplay* game;
 
 		glEnable(GL_LIGHTING); // Wlaczenie oswietlenia
 		glShadeModel(GL_SMOOTH); // Wybor techniki cieniowania
-		glEnable(GL_LIGHT0); // Wlaczenie 0-go zrodla swiatla
+		//glEnable(GL_LIGHT0); // Wlaczenie 0-go zrodla swiatla
+		glEnable(GL_LIGHT1); // Wlaczenie 1-go zrodla swiatla
+
 
 
 		glutMainLoop();

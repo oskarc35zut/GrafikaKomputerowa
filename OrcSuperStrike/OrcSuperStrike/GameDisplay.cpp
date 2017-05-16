@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "GameDisplay.h"
+#include "math.h";
 
 
 GameDisplay::GameDisplay()
@@ -13,11 +14,11 @@ GameDisplay::GameDisplay()
 
 	LightPos.x = 0.0f;
 	LightPos.y = 0.0f;
-	LightPos.z = 0.0f;
+	LightPos.z = 1.0f;
 
-	player.pos.x = 0.0f;
+	player.pos.x = 1.0f;
 	player.pos.y = 0.0f;
-	player.pos.z = 8.0f;
+	player.pos.z = 1.0f;
 
 	player.dir.x = 0.0f;
 	player.dir.y = 0.0f;
@@ -102,6 +103,14 @@ void GameDisplay::OnTimer(int id)
 		player.velS = player.speed;
 	}
 
+	if (keystate['g']) {
+		glEnable(GL_LIGHT1);
+	}
+
+	if (keystate['h']) {
+		glDisable(GL_LIGHT1);
+	}
+
 	// Obrot kamery
 	float phi = (float)atan2(player.dir.z, player.dir.x);
 	if (keystate['q']) {
@@ -166,18 +175,17 @@ void GameDisplay::OnRender()
 		0.0f, 1.0f, 0.0f
 	);
 
-#pragma region Swiatlo
-
-
-
-
-
+#pragma region Swiatlo 
 
 	float l0_amb[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-	float l0_dif[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	float l0_dif[] = { 0.2f, 0.2f, 0.2f, 1.0f };
 	float l0_spe[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	printf("X=%f Y=%f Z=%f\n", LightPos.x, LightPos.y, LightPos.z);
-	float l0_pos[] = { LightPos.x, 1.0f, LightPos.y, 0.0f };
+
+	int rotate_step = 700;
+	LightPos.x = sin(T / rotate_step);
+	LightPos.y = cos(T / rotate_step);
+	float l0_pos[] = { LightPos.x, LightPos.z, LightPos.y, 0.0f };
+
 	glLightfv(GL_LIGHT0, GL_AMBIENT, l0_amb);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, l0_dif);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, l0_spe);
@@ -185,46 +193,71 @@ void GameDisplay::OnRender()
 
 #pragma endregion
 
+#pragma region Swiatlo 
+
+	float distance = 10;
+
+	float l1_amb[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+	float l1_dif[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	float l1_spe[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	float l1_pos[] = { player.pos.x, player.pos.z, player.pos.y, 1.0f };
+
+	glLightfv(GL_LIGHT1, GL_AMBIENT, l1_amb);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, l1_dif);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, l1_spe);
+	glLightfv(GL_LIGHT1, GL_POSITION, l1_pos);
+
+	//glLightf(GL_LIGHT1, GL_CONSTANT_ATTENUATION, 0.005);
+	//glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 0.00005);
+	glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, 0.0002);
+
+	float ligthDir[3] = { player.dir.x, player.dir.z, player.dir.y };
+	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, ligthDir);
+	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 45.0f);
+
+#pragma endregion
+
 
 #pragma region Kule
 
-	for (int ix = -30; ix <= 30; ix += 5) {
-		for (int iz = -30; iz <= 30; iz += 5) {
-			float m1_amb[] = { 0.0f, 1.0f, 0.0f, 1.0f };
-			float m1_dif[] = { 0.0f, 1.0f, 0.0f, 1.0f };
-			float m1_spe[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-			glMaterialfv(GL_FRONT, GL_AMBIENT, m1_amb);
-			glMaterialfv(GL_FRONT, GL_DIFFUSE, m1_dif);
-			glMaterialfv(GL_FRONT, GL_SPECULAR, m1_spe);
-			glMaterialf(GL_FRONT, GL_SHININESS, 20.0f);
-
-			glPushMatrix();
-			glTranslatef((GLfloat)ix, 5.0f, (GLfloat)iz);
-			glutSolidSphere(1.0f, 16, 16);
-			glPopMatrix();
-
-		}
-	}
 
 #pragma endregion //Kule
 
 #pragma region Szesciany
 
-	for (int ix = -30; ix <= 30; ix += 5) {
-		for (int iz = -30; iz <= 30; iz += 5) {
-			float m1_amb[] = { 0.0f, 0.2f, 1.0f, 1.0f };
-			float m1_dif[] = { 0.0f, 0.2f, 1.0f, 1.0f };
-			float m1_spe[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-			glMaterialfv(GL_FRONT, GL_AMBIENT, m1_amb);
-			glMaterialfv(GL_FRONT, GL_DIFFUSE, m1_dif);
-			glMaterialfv(GL_FRONT, GL_SPECULAR, m1_spe);
-			glMaterialf(GL_FRONT, GL_SHININESS, 20.0f);
+	int shape_step = 5;
+	int view_range = 50;
 
-			glPushMatrix();
-			glTranslatef((GLfloat)ix, -0.2f, (GLfloat)iz);
-			glutSolidCube(1.4);
-			glPopMatrix();
+	//int ix_start = ((floor(ceil(sin(player.pos.x / (ceil(player.pos.x * player.pos.x))))) * 2 - 1)*(1)*((int)player.pos.x) * shape_step) - view_range;
+	//int iz_start = ((floor(ceil(sin(player.pos.z / (ceil(player.pos.z * player.pos.z))))) * 2 - 1)*(1)*((int)player.pos.z) * shape_step) - view_range;
 
+	//
+
+	//printf("ix = %d, iz = %d\n", ix_start, iz_start);
+	//printf("Xx = %d, Zz = %d\n", view_range + (int)player.pos.x, view_range + (int)player.pos.z);
+	//printf("dx = %d, dz = %d\n\n", view_range + (int)player.pos.x - ix_start, view_range + (int)player.pos.z - iz_start);
+
+	for (int ix = 0; ix <= view_range + (int)player.pos.x; ix += shape_step) {
+		for (int iz = 0; iz <= view_range + (int)player.pos.z; iz += shape_step) {
+			InfMap(ix, iz);
+		}
+	}
+
+	for (int ix = 0; ix >= -(view_range - (int)player.pos.x); ix -= shape_step) {
+		for (int iz = 0; iz <= view_range + (int)player.pos.z; iz += shape_step) {
+			InfMap(ix, iz);
+		}
+	}
+
+	for (int ix = 0; ix <= view_range + (int)player.pos.x; ix += shape_step) {
+		for (int iz = 0; iz >= -(view_range - (int)player.pos.z); iz -= shape_step) {
+			InfMap(ix, iz);
+		}
+	}
+
+	for (int ix = 0; ix >= -(view_range - (int)player.pos.x); ix -= shape_step) {
+		for (int iz = 0; iz >= -(view_range - (int)player.pos.z); iz -= shape_step) {
+			InfMap(ix, iz);
 		}
 	}
 
@@ -249,3 +282,39 @@ void GameDisplay::OnReshape(int width, int height)
 }
 
 
+
+
+void GameDisplay::InfMap(int ix, int iz)
+{
+	if (1)
+	{
+		float m1_amb[] = { 0.0f, 0.2f, 1.0f, 1.0f };
+		float m1_dif[] = { 0.0f, 0.2f, 1.0f, 1.0f };
+		float m1_spe[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+		glMaterialfv(GL_FRONT, GL_AMBIENT, m1_amb);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, m1_dif);
+		glMaterialfv(GL_FRONT, GL_SPECULAR, m1_spe);
+		glMaterialf(GL_FRONT, GL_SHININESS, 20.0f);
+
+		glPushMatrix();
+		glTranslatef((GLfloat)ix, -0.2f, (GLfloat)iz);
+		glutSolidCube(1.4);
+		glPopMatrix();
+	}
+
+	if (1)
+	{
+		float m1_amb[] = { 0.0f, 1.0f, 0.0f, 1.0f };
+		float m1_dif[] = { 0.0f, 1.0f, 0.0f, 1.0f };
+		float m1_spe[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+		glMaterialfv(GL_FRONT, GL_AMBIENT, m1_amb);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, m1_dif);
+		glMaterialfv(GL_FRONT, GL_SPECULAR, m1_spe);
+		glMaterialf(GL_FRONT, GL_SHININESS, 20.0f);
+
+		glPushMatrix();
+		glTranslatef((GLfloat)ix, 5.0f, (GLfloat)iz);
+		glutSolidSphere(1.0f, 16, 16);
+		glPopMatrix();
+	}
+}
