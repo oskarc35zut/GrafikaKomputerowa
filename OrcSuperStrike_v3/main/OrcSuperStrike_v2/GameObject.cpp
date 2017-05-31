@@ -10,6 +10,10 @@ GameObject::GameObject(btCollisionShape* pShape, float mass, const btVector3 &co
 	btTransform transform;
 	transform.setIdentity();
 	transform.setOrigin(initialPosition);
+
+
+
+
 	transform.setRotation(initialRotation);
 
 	// create the motion state from the

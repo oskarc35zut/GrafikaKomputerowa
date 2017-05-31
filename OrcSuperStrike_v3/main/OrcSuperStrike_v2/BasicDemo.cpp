@@ -7,6 +7,8 @@ m_bApplyForce(false),
 m_pExplosion(0),
 m_bCanExplode(true) {
 
+	ActualLevel = 0;
+
 }
 
 void BasicDemo::InitializePhysics() {
@@ -34,68 +36,7 @@ void BasicDemo::ShutdownPhysics() {
 }
 
 void BasicDemo::CreateObjects() {
-	// create a ground plane
-	CreateGameObject(new btBoxShape(btVector3(1,50,50)), 0, btVector3(0.2f, 0.6f, 0.6f), btVector3(0.0f, 0.0f, 0.0f));
-
-	// create our red box, but store the pointer for future usage
-	m_pBox = CreateGameObject(new btBoxShape(btVector3(1,1,1)), 1.0, btVector3(1.0f, 0.2f, 0.2f), btVector3(0.0f, 10.0f, 0.0f));
-
-	// create a second box
-	CreateGameObject(new btBoxShape(btVector3(1,1,1)), 1.0, btVector3(0.0f, 0.2f, 0.8f), btVector3(1.25f, 20.0f, 0.0f));
-
-	// create a trigger volume
-	m_pTrigger = new btCollisionObject();
-	// create a box for the trigger's shape
-	m_pTrigger->setCollisionShape(new btBoxShape(btVector3(1,0.25,1)));
-	// set the trigger's position
-	btTransform triggerTrans;
-	triggerTrans.setIdentity();
-	triggerTrans.setOrigin(btVector3(0,1.5,0));
-	m_pTrigger->setWorldTransform(triggerTrans);
-	// flag the trigger to ignore contact responses
-	m_pTrigger->setCollisionFlags(btCollisionObject::CF_NO_CONTACT_RESPONSE);
-	// add the trigger to our world
-	m_pWorld->addCollisionObject(m_pTrigger);
-
-	// create a yellow sphere
-	CreateGameObject(new btSphereShape(1.0f), 1.0, btVector3(0.7f, 0.7f, 0.0f), btVector3(-5.0, 10.0f, 0.0f));
-
-	// create a green cylinder
-	CreateGameObject(new btCylinderShape(btVector3(1,1,1)), 1.0, btVector3(0.0f, 0.7f, 0.0f), btVector3(-2, 10.0f, 0.0f));
-
-	// create a vertex cloud defining a square-based pyramid
-	btVector3 points[5] = {btVector3(-0.5,1,1),
-		btVector3(-0.5,1,-1),
-		btVector3(-0.5,-1,1),
-		btVector3(-0.5,-1,-1),
-		btVector3(1,0,0)};
-	// create our convex hull
-	btConvexHullShape* pShape = new btConvexHullShape(&points[0].getX(),5);
-	// initialize the object as a polyhedron
-	pShape->initializePolyhedralFeatures();
-	// create the game object using our convex hull shape
-	CreateGameObject(pShape, 1.0, btVector3(1,1,1), btVector3(5, 15, 0));
-
-/*ADD*/		// create two shapes for the rod and the load
-/*ADD*/		btCollisionShape* pRod = new btBoxShape(btVector3(1.5f, 0.2f, 0.2f));
-/*ADD*/		btCollisionShape* pLoad = new btSphereShape(0.5f);
-/*ADD*/		// create a transform we'll use to set each object's position
-/*ADD*/		btTransform trans;
-/*ADD*/		trans.setIdentity();
-/*ADD*/		// create our compound shape
-/*ADD*/		btCompoundShape* pCompound = new btCompoundShape();
-/*ADD*/		// add the rod
-/*ADD*/		pCompound->addChildShape(trans, pRod);
-/*ADD*/		trans.setOrigin(btVector3(-1.75f, 0.0f, 0.0f));
-/*ADD*/		// add the top load
-/*ADD*/		pCompound->addChildShape(trans, pLoad);
-/*ADD*/		trans.setIdentity();
-/*ADD*/		// add the bottom load
-/*ADD*/		trans.setOrigin(btVector3(1.75f, 0.0f, 0.0f));
-/*ADD*/		pCompound->addChildShape(trans, pLoad);
-/*ADD*/		// create a game object using the compound shape
-/*ADD*/		CreateGameObject(pCompound, 2.0f, btVector3(0.8,0.4,0.1), btVector3(-4, 10.0f, 0.0f));
-
+	LoadLevel();
 }
 
 void BasicDemo::CollisionEvent(btRigidBody* pBody0, btRigidBody* pBody1) {

@@ -9,19 +9,19 @@ public:
 	 ~GameScene();
 
 	// Funkcja laduje dany poziom
-	static void LoadLevel(int LevelWhatYouWantToDraw);
+	void LoadLevel(int LevelWhatYouWantToDraw);
 	// Funkcja laduje aktualny poziom
-	static void LoadLevel();
+	void LoadLevel();
 
 protected:
 	static int ActualLevel;
 
 	// Zmien scene
-	static void PushActualLevelObjects();
+	void PushActualLevelObjects();
 	// Funkcja podstawowymi obiektami kazdego poziomu
-	static void MainObjects();
+	void MainObjects();
 
 public:
-	static int GetActualLevel();
+	int GetActualLevel();
 };
 

@@ -19,6 +19,7 @@ virtual void UpdateScene(float dt);
 	virtual void CollisionEvent(btRigidBody* pBody0, btRigidBody* pBody1) override;
 
 protected:
+
 	// our box to lift
 	GameObject* m_pBox;
 
@@ -31,4 +32,30 @@ protected:
 	// explosion variables
 	btCollisionObject* m_pExplosion;
 	bool m_bCanExplode;
+
+
+
+
+
+
+
+#pragma region LoadLevel
+public:
+
+	// Funkcja laduje dany poziom
+	void LoadLevel(int LevelWhatYouWantToDraw);
+	// Funkcja laduje aktualny poziom
+	void LoadLevel();
+
+	int GetActualLevel();
+
+protected:
+
+	int ActualLevel;
+
+	// Zmien scene
+	void PushActualLevelObjects();
+	// Funkcja podstawowymi obiektami kazdego poziomu
+	void MainObjects();
+#pragma endregion //LoadLevel
 };
