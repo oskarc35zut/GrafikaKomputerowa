@@ -22,6 +22,9 @@
 #include <iterator>
 #include <algorithm>
 
+#include "GameTime.h";
+
+
 // a convenient typedef to reference an STL vector of GameObjects
 typedef std::vector<GameObject*> GameObjects;
 

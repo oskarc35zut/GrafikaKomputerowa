@@ -21,7 +21,7 @@ public:
 
 	std::string GetName() { return m_name; }
 
-	void RotateGameObject(GameObject* obj, const btVector3 & angles);
+	void RotateGameObject(const btVector3 & angles);
 
 	void GetTransform(btScalar* transform) { 
 		if (m_pMotionState) m_pMotionState->GetWorldTransform(transform); 
@@ -37,5 +37,6 @@ protected:
 	OpenGLMotionState*  m_pMotionState;
 	btVector3      m_color;
 	std::string m_name;
+	float m_mass;
 };
 #endif

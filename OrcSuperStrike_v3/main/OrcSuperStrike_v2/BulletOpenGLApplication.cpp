@@ -373,11 +373,17 @@ void BulletOpenGLApplication::RenderScene() {
 	// create an array of 16 floats (representing a 4x4 matrix)
 	btScalar transform[16];
 
+	printf("%f\n", GameTime::GetTimeAnimation(1));
+
 	// iterate through all of the objects in our world
 	for(GameObjects::iterator i = m_objects.begin(); i != m_objects.end(); ++i) {
 		// get the object from the iterator
 		GameObject* pObj = *i;
+		if (pObj->GetName() == "plane")
+		{
+			pObj->RotateGameObject(btVector3(0.0, 0.0, 0.0 + GameTime::GetTimeAnimation(10)));
 
+		}
 		
 
 		// read the transform
@@ -387,14 +393,24 @@ void BulletOpenGLApplication::RenderScene() {
 		DrawShape(transform, pObj->GetShape(), pObj->GetColor());
 	}
 
-	// Noga L
+	 //Z
 	glColor3f(0.5f, 0.0f, 0.0f);
 	glPushMatrix();
-	glTranslatef(-1.0f, -3.0f, 0.0f);
-	glRotatef(-30.0f, 0.0f, 0.0f, 1.0f);
-	glScalef(2.0f, 27.0f, 2.0f);
+	glTranslatef(0.0f, 0.0f, 0.0f);
+	glScalef(0.5f, 27.0f, 0.5f);
 	glutSolidCube(1.0f);
 	glPopMatrix();
+
+	for (int ix = -50; ix <= 50; ix += 4) {
+		for (int iz = -50; iz <= 50; iz += 4) {
+			glColor3f(.5f + .1f * ix, .5f - .1f * iz, 0.0f);
+			glPushMatrix();
+			glTranslatef(ix, 0.0f, iz);
+			glutSolidSphere(.05f, 8, 8);
+			glPopMatrix();
+		}
+	}
+
 
 	// after rendering all game objects, perform debug rendering
 	// Bullet will figure out what needs to be drawn then call to

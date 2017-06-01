@@ -10,9 +10,9 @@ void BasicDemo::MainObjects()
 	btVector3 Position = btVector3(0.0f, 0.0f, 0.0f);
 	btQuaternion TubeRotate = btQuaternion(0,0,1,1);
 
-	CreateGameObject(std::string("brak"), new btBoxShape(TubeBoxShape), 0, btVector3(0.46f, 0.87f, 0.35f), Position, btVector3(0.0, 0.0, 0.0));
+	CreateGameObject(std::string("plane"), new btBoxShape(TubeBoxShape), 0, btVector3(0.46f, 0.87f, 0.35f), Position, btVector3(0.0, 0.0, 0.0));
 
-	CreateGameObject(std::string("brak"), new btBoxShape(TubeBoxShape), 0, Tubecolor, Position, btVector3(0.0, 0.0, 0.0));
+	//CreateGameObject(std::string("plane2"), new btBoxShape(TubeBoxShape), 0, Tubecolor, Position, btVector3(0.0, 0.0, 0.0));
 
 
 }
@@ -55,7 +55,7 @@ void BasicDemo::PushActualLevelObjects()
 
 
 
-	switch (ActualLevel+1)
+	switch (ActualLevel)
 	{
 	case 0:
 		#pragma region Lvl0

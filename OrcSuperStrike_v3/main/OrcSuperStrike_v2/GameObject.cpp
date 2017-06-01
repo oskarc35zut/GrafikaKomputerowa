@@ -10,7 +10,8 @@ GameObject::GameObject(std::string & name, btCollisionShape * pShape, float mass
 	// store the color
 	m_color = color;
 
-
+	// store the mass
+	m_mass = mass;
 
 
 
@@ -19,48 +20,17 @@ GameObject::GameObject(std::string & name, btCollisionShape * pShape, float mass
 	transform.setIdentity();
 	transform.setOrigin(initialPosition);
 	
-
-	btQuaternion rotation;// = btQuaternion(0, 0, 1, 1);
+	// rotate the body
+	btQuaternion rotation;
 	double onegrade = (M_PI / 180);
 	rotation.setEuler(onegrade * angles.getY(), onegrade *  angles.getX(), onegrade *  angles.getZ() + M_PI / 2);
 	
-
-	//// create orientation vectors
-	//btVector3 up(0, 1, 0);
-	//btVector3 lookat = quatRotate(rotation, btVector3(0, 0, 1));
-	//btVector3 forward = btVector3(lookat.getX(), 0, lookat.getZ()).normalize();
-	//btVector3 side = btCross(up, forward);
-
-	//// rotate camera with quaternions created from axis and angle
-	//rotation = btQuaternion(up, angles.getY()) * rotation;
-	//rotation = btQuaternion(side, angles.getX()) * rotation;
-	//rotation = btQuaternion(forward, angles.getZ()) * rotation;
-
-
-
 	transform.setRotation(rotation);
 
-	
 
 	// create the motion state from the
 	// initial transform
 	m_pMotionState = new OpenGLMotionState(transform);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -84,45 +54,38 @@ GameObject::GameObject(std::string & name, btCollisionShape * pShape, float mass
 }
 
 
-void GameObject::RotateGameObject(GameObject * obj, const btVector3 & angles)
+void GameObject::RotateGameObject(const btVector3 & angles)
 {
 	
 
 	btTransform transform;
 	transform.setIdentity();
 
-	btQuaternion quat;
+	btQuaternion rotate;
 	double onegrade = (M_PI / 180);
-	quat.setEuler(onegrade * angles.getY(), onegrade *  angles.getX(), onegrade *  angles.getZ() + M_PI / 2);
+	rotate.setEuler(onegrade * angles.getY(), onegrade *  angles.getX(), onegrade *  angles.getZ() + M_PI / 2);
 	
+	transform.setRotation(rotate);
+
 	(this->m_pBody)->setCenterOfMassTransform(transform);
 
-	//// create the initial transform
-	//btTransform transform;
-	////transform = obj->m_pMotionState;
-
-	//btQuaternion rotation = btQuaternion(0, 0, 1, 1);
-
-	//// create orientation vectors
-	//btVector3 up(0, 1, 0);
-	//btVector3 lookat = quatRotate(rotation, btVector3(0, 0, 1));
-	//btVector3 forward = btVector3(lookat.getX(), 0, lookat.getZ()).normalize();
-	//btVector3 side = btCross(up, forward);
-
-	//// rotate camera with quaternions created from axis and angle
-	//rotation = btQuaternion(up, angles.getY()) * rotation;
-	//rotation = btQuaternion(side, angles.getX()) * rotation;
-	//rotation = btQuaternion(forward, angles.getZ()) * rotation;
+	// create the motion state from the
+	// initial transform
+	m_pMotionState = new OpenGLMotionState(transform);
 
 
 
-	//transform.setRotation(rotation);
+	// calculate the local inertia
+	//btVector3 localInertia(0, 0, 0);
 
+	// create the rigid body construction
+	// info using the mass, motion state
+	// and shape
+	//btRigidBody::btRigidBodyConstructionInfo cInfo(m_mass, m_pMotionState, m_pShape, localInertia);
 
+	// create the rigid body
+	//m_pBody = new btRigidBody(cInfo);
 
-	//// create the motion state from the
-	//// initial transform
-	//m_pMotionState = new OpenGLMotionState(transform);
 }
 
 
