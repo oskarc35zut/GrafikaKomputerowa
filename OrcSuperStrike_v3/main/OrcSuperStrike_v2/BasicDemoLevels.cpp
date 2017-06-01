@@ -1,3 +1,4 @@
+
 #include "BasicDemo.h"
 
 
@@ -12,7 +13,10 @@ void BasicDemo::MainObjects()
 
 	CreateGameObject(std::string("plane"), new btBoxShape(TubeBoxShape), 0, btVector3(0.46f, 0.87f, 0.35f), Position, btVector3(0.0, 0.0, 0.0));
 
-	//CreateGameObject(std::string("plane2"), new btBoxShape(TubeBoxShape), 0, Tubecolor, Position, btVector3(0.0, 0.0, 0.0));
+	CreateGameObject(std::string("plane2"), new btBoxShape(TubeBoxShape), 0, Tubecolor, Position, btVector3(0.0, 0.0, 0.0));
+
+
+
 
 
 }
@@ -36,7 +40,16 @@ void BasicDemo::LoadLevel()
 
 void BasicDemo::PushActualLevelObjects()
 {
-	//Usuwanie wszystkich obiektow
+	// Deleting all GameObjects (the way suck as fuck but works)
+	while (m_objects.size() > 0){
+		for (GameObjects::iterator iter = m_objects.begin(); iter != m_objects.end(); ++iter){
+			GameObject* pObject = *iter;
+			m_pWorld->removeRigidBody(pObject->GetRigidBody());
+			m_objects.erase(iter);
+			delete pObject;
+			break;
+		}
+	}
 
 #pragma region Declarations
 
@@ -117,6 +130,7 @@ void BasicDemo::PushActualLevelObjects()
 		pCompound->addChildShape(trans, pLoad);
 		// create a game object using the compound shape
 		CreateGameObject(std::string("brak"), pCompound, 2.0f, btVector3(0.8, 0.4, 0.1), btVector3(-4, 10.0f, 0.0f));
+
 		#pragma endregion //Lvl0
 		break;
 	case 1:

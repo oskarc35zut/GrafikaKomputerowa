@@ -373,7 +373,7 @@ void BulletOpenGLApplication::RenderScene() {
 	// create an array of 16 floats (representing a 4x4 matrix)
 	btScalar transform[16];
 
-	printf("%f\n", GameTime::GetTimeAnimation(1));
+	
 
 	// iterate through all of the objects in our world
 	for(GameObjects::iterator i = m_objects.begin(); i != m_objects.end(); ++i) {
@@ -381,7 +381,7 @@ void BulletOpenGLApplication::RenderScene() {
 		GameObject* pObj = *i;
 		if (pObj->GetName() == "plane")
 		{
-			pObj->RotateGameObject(btVector3(0.0, 0.0, 0.0 + GameTime::GetTimeAnimation(10)));
+			pObj->RotateGameObject(btVector3(0.0, 0.0 + GameTime::GetTimeAnimation(5), 90.0 ));
 
 		}
 		
@@ -623,8 +623,12 @@ void BulletOpenGLApplication::DestroyGameObject(btRigidBody* pBody) {
  	// we need to search through the objects in order to 
  	// find the corresponding iterator (can only erase from 
  	// an std::vector by passing an iterator)
+	while (m_objects.size() > 0)
+	{
+
+	
  	for (GameObjects::iterator iter = m_objects.begin(); iter != m_objects.end(); ++iter) {
- 		if ((*iter)->GetRigidBody() == pBody) {
+ 		//if ((*iter)->GetRigidBody() == pBody) {
  			GameObject* pObject = *iter;
  			// remove the rigid body from the world
  			m_pWorld->removeRigidBody(pObject->GetRigidBody());
@@ -633,9 +637,17 @@ void BulletOpenGLApplication::DestroyGameObject(btRigidBody* pBody) {
  			// delete the object from memory
  			delete pObject;
  			// done
- 			return;
- 		}
+ 			//return;
+ 		//}
+
+		//if (m_objects.capacity() == 1)
+		//{
+		//	break;
+		//}
+
+			break;
  	}
+	}
 }
 
 void BulletOpenGLApplication::CreatePickingConstraint(int x, int y) {

@@ -1,5 +1,6 @@
 #pragma once
 #include <Windows.h>
+#include <math.h>
 
 class GameTime
 {
@@ -11,6 +12,6 @@ public:
 	static int GetSeconds();
 	static int GetMinutes();
 
-	static double GetTimeAnimation(double speed);
+	static double GetTimeAnimation(int speed);
 };
 
