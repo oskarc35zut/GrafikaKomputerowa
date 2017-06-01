@@ -1,13 +1,14 @@
+#define _USE_MATH_DEFINES
 #ifndef _GAMEOBJECT_H_
 #define _GAMEOBJECT_H_
 
 #include "btBulletDynamicsCommon.h"
 
 #include "OpenGLMotionState.h"
-
+#include <math.h>
 class GameObject {
 public:
-	GameObject(btCollisionShape* pShape, float mass, const btVector3 &color, const btVector3 &initialPosition = btVector3(0,0,0), const btQuaternion &initialRotation = btQuaternion(0,0,1,1));
+	GameObject(std::string &name, btCollisionShape* pShape, float mass, const btVector3 &color, const btVector3 &initialPosition = btVector3(0,0,0), const btVector3 &angles = btVector3(0, 0, 0));
 	~GameObject();
 
 	// accessors
@@ -16,6 +17,10 @@ public:
 	btRigidBody* GetRigidBody() { return m_pBody; }
 
 	btMotionState* GetMotionState() { return m_pMotionState; }
+
+	std::string GetName() { return m_name; }
+
+	void RotateGameObject(GameObject* obj, const btVector3 & angles);
 
 	void GetTransform(btScalar* transform) { 
 		if (m_pMotionState) m_pMotionState->GetWorldTransform(transform); 
@@ -30,5 +35,6 @@ protected:
 	btRigidBody*    m_pBody;
 	OpenGLMotionState*  m_pMotionState;
 	btVector3      m_color;
+	std::string m_name;
 };
 #endif

@@ -378,12 +378,23 @@ void BulletOpenGLApplication::RenderScene() {
 		// get the object from the iterator
 		GameObject* pObj = *i;
 
+		
+
 		// read the transform
 		pObj->GetTransform(transform);
 
 		// get data from the object and draw it
 		DrawShape(transform, pObj->GetShape(), pObj->GetColor());
 	}
+
+	// Noga L
+	glColor3f(0.5f, 0.0f, 0.0f);
+	glPushMatrix();
+	glTranslatef(-1.0f, -3.0f, 0.0f);
+	glRotatef(-30.0f, 0.0f, 0.0f, 1.0f);
+	glScalef(2.0f, 27.0f, 2.0f);
+	glutSolidCube(1.0f);
+	glPopMatrix();
 
 	// after rendering all game objects, perform debug rendering
 	// Bullet will figure out what needs to be drawn then call to
@@ -483,9 +494,9 @@ void BulletOpenGLApplication::DrawShape(btScalar* transform, const btCollisionSh
 	glPopMatrix();
 }
 
-GameObject* BulletOpenGLApplication::CreateGameObject(btCollisionShape* pShape, const float &mass, const btVector3 &color, const btVector3 &initialPosition, const btQuaternion &initialRotation) {
+GameObject * BulletOpenGLApplication::CreateGameObject(std::string & name, btCollisionShape * pShape, const float &mass, const btVector3 &color, const btVector3 &initialPosition, const btVector3 & angles) {
 	// create a new game object
-	GameObject* pObject = new GameObject(pShape, mass, color, initialPosition, initialRotation);
+	GameObject* pObject = new GameObject(name, pShape, mass, color, initialPosition, angles);
 
 	// push it to the back of the list
 	m_objects.push_back(pObject);
@@ -537,10 +548,14 @@ btVector3 BulletOpenGLApplication::GetPickingRay(int x, int y) {
  	return rayTo;
 }
  	
+
+
 void BulletOpenGLApplication::ShootBox(const btVector3 &direction) {
  	// create a new box object
- 	GameObject* pObject = CreateGameObject(new btBoxShape(btVector3(1, 1, 1)), 1, btVector3(0.4f, 0.f, 0.4f), m_cameraPosition);
+	
+ 	GameObject* pObject = CreateGameObject( std::string("ShotBox"),new btBoxShape(btVector3(1, 1, 1)), 1, btVector3(0.4f, 0.f, 0.4f), m_cameraPosition);
  		
+	
  	// calculate the velocity
  	btVector3 velocity = direction; 
  	velocity.normalize();

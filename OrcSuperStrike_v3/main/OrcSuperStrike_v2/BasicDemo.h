@@ -1,7 +1,11 @@
+#define _USE_MATH_DEFINES
+#define EXPLOSION_STRENGTH 50.0f
+
 #include "BulletOpenGLApplication.h"
 #include "btBulletDynamicsCommon.h"
+#include <math.h>
 
-#define EXPLOSION_STRENGTH 50.0f
+
 
 class BasicDemo : public BulletOpenGLApplication {
 public:

@@ -75,11 +75,13 @@ public:
 	void DrawShape(btScalar* transform, const btCollisionShape* pShape, const btVector3 &color);
 
 	// object functions
-	GameObject* CreateGameObject(btCollisionShape* pShape, 
+	GameObject* CreateGameObject(
+			std::string &name,	
+			btCollisionShape* pShape, 
 			const float &mass, 
 			const btVector3 &color = btVector3(1.0f,1.0f,1.0f), 
 			const btVector3 &initialPosition = btVector3(0.0f,0.0f,0.0f), 
-			const btQuaternion &initialRotation = btQuaternion(0,0,1,1));
+			const btVector3 &angles = btVector3(0, 0, 0));
 
  	void ShootBox(const btVector3 &direction);
  	void DestroyGameObject(btRigidBody* pBody);

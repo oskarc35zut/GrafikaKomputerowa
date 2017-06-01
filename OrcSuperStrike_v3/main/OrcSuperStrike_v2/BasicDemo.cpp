@@ -44,7 +44,7 @@ void BasicDemo::CollisionEvent(btRigidBody* pBody0, btRigidBody* pBody1) {
 	if (pBody0 == m_pBox->GetRigidBody() && pBody1 == m_pTrigger ||
 		pBody1 == m_pBox->GetRigidBody() && pBody0 == m_pTrigger) {
 			// if yes, create a big green box nearby
-			CreateGameObject(new btBoxShape(btVector3(2,2,2)), 2.0, btVector3(0.3, 0.7, 0.3), btVector3(5, 10, 0));
+			CreateGameObject(std::string("CollisionEvent"), new btBoxShape(btVector3(2,2,2)), 2.0, btVector3(0.3, 0.7, 0.3), btVector3(5, 10, 0));
 	}
 
 	// Impulse testing

@@ -3,6 +3,8 @@
 
 #include "btBulletCollisionCommon.h"
 
+#include <string>
+
 class OpenGLMotionState : public btDefaultMotionState {
 public:
 	OpenGLMotionState(const btTransform &transform) : btDefaultMotionState(transform) {}
