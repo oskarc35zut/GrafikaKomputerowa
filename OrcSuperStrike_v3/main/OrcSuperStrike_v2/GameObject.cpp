@@ -21,7 +21,8 @@ GameObject::GameObject(std::string & name, btCollisionShape * pShape, float mass
 	
 
 	btQuaternion rotation;// = btQuaternion(0, 0, 1, 1);
-	rotation.setEuler(angles.getY(), angles.getX(), angles.getZ() + M_PI / 2);
+	double onegrade = (M_PI / 180);
+	rotation.setEuler(onegrade * angles.getY(), onegrade *  angles.getX(), onegrade *  angles.getZ() + M_PI / 2);
 	
 
 	//// create orientation vectors
@@ -91,10 +92,10 @@ void GameObject::RotateGameObject(GameObject * obj, const btVector3 & angles)
 	transform.setIdentity();
 
 	btQuaternion quat;
-
-	quat.setEuler(angles.getY(), angles.getX(), angles.getZ() + M_PI / 2);
-
-	obj->m_pBody->setCenterOfMassTransform(transform);
+	double onegrade = (M_PI / 180);
+	quat.setEuler(onegrade * angles.getY(), onegrade *  angles.getX(), onegrade *  angles.getZ() + M_PI / 2);
+	
+	(this->m_pBody)->setCenterOfMassTransform(transform);
 
 	//// create the initial transform
 	//btTransform transform;
